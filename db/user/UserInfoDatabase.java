@@ -14,6 +14,7 @@ import java.util.List;
  * @author linking
  *         date: 2017/12/22.
  *         description: User table CRUD
+ *         如果修改了CreateDatabaseAndTables的AssetTableFields字段名，需要同步改本文件的 insert update
  */
 public class UserInfoDatabase {
 
@@ -31,7 +32,7 @@ public class UserInfoDatabase {
     public void insert(User data) {
         String sql = "insert into " + CreateDatabaseAndTables.assetTablesNames[0];
 
-        sql += "(" + CreateDatabaseAndTables.userTableFields[0] + ") values(?)";
+        sql += "(" + CreateDatabaseAndTables.AssetTableFields.USERNAME.getName() + ") values(?)";
 
         SQLiteDatabase sqlite = sqLiteHelper4UserInfo.getWritableDatabase();
         sqlite.execSQL(sql, new String[]{data.getUserName() + ""});
@@ -57,8 +58,8 @@ public class UserInfoDatabase {
      */
     public void update(User data) {
         SQLiteDatabase sqlite = sqLiteHelper4UserInfo.getWritableDatabase();
-        String sql = ("update " + CreateDatabaseAndTables.assetTablesNames[0] + " set " + CreateDatabaseAndTables.userTableFields[0]
-                    + "=? where userId=?");
+        String sql = ("update " + CreateDatabaseAndTables.assetTablesNames[0] + " set " + CreateDatabaseAndTables.AssetTableFields.USERNAME.getName()
+                + "=? where userId=?");
         sqlite.execSQL(sql,
                 new String[]{data.getUserName() + "", data.getUserId() + ""});
         sqlite.close();
@@ -76,7 +77,7 @@ public class UserInfoDatabase {
      */
     public List<User> query(String where) {
         SQLiteDatabase sqlite = sqLiteHelper4UserInfo.getReadableDatabase();
-        ArrayList<User> data ;
+        ArrayList<User> data;
         data = new ArrayList<>();
         Cursor cursor = sqlite.rawQuery("select * from "
                 + CreateDatabaseAndTables.assetTablesNames[0] + where, null);

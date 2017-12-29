@@ -13,7 +13,8 @@ import java.util.List;
 /**
  * @author linking
  *         date: 2017/12/27.
- *         description: 资产本地数据库 增删改查
+ *         description: 资产本地数据库 CRUD
+ *         如果修改了CreateDatabaseAndTables的AssetTableFields字段名，需要同步改本文件的 insert update
  */
 public class AssetInfoDatabase {
 
@@ -31,15 +32,16 @@ public class AssetInfoDatabase {
     public void insert(Asset data) {
         String sql = "insert into " + CreateDatabaseAndTables.assetTablesNames[1];
 
-        sql += "(" + CreateDatabaseAndTables.assetTableFields[0] + "," +  CreateDatabaseAndTables.assetTableFields[1] + ","
-                +  CreateDatabaseAndTables.assetTableFields[2] + ")"
+        sql += "(" + CreateDatabaseAndTables.AssetTableFields.CZZ003.getName() + "," + CreateDatabaseAndTables.AssetTableFields.CZZ004.getName() + ","
+                + CreateDatabaseAndTables.AssetTableFields.CZZ018.getName() + ")"
                 + " values(?, ?, ?)";
 
         SQLiteDatabase sqlite = sqLiteHelper4UserInfo.getWritableDatabase();
+        //开启事务；避免冲突；没完成则回滚
         sqlite.beginTransaction();
         try {
-            sqlite.execSQL(sql, new String[]{data.getCZZ003() + "" + data.getCZZ004() + ""
-                    + data.getCZZ018() + ""});
+            sqlite.execSQL(sql, new String[]{data.getCzz003() + "" + data.getCzz004() + ""
+                    + data.getCzz018() + ""});
             sqlite.setTransactionSuccessful();
         } finally {
             sqlite.endTransaction();
@@ -66,11 +68,11 @@ public class AssetInfoDatabase {
      */
     public void update(Asset data) {
         SQLiteDatabase sqlite = sqLiteHelper4UserInfo.getWritableDatabase();
-        String sql = ("update " + CreateDatabaseAndTables.assetTablesNames[1] + " set " +  CreateDatabaseAndTables.assetTableFields[0] + "=?,"
-                +  CreateDatabaseAndTables.assetTableFields[1] + "=?, " +  CreateDatabaseAndTables.assetTableFields[2] + "=? where id=?");
+        String sql = ("update " + CreateDatabaseAndTables.AssetTableFields.CZZ003.getName() + " set " + CreateDatabaseAndTables.AssetTableFields.CZZ004.getName() + "=?,"
+                + CreateDatabaseAndTables.AssetTableFields.CZZ018.getName() + "=?, " + "=? where id=?");
         sqlite.execSQL(sql,
-                new String[]{data.getCZZ003() + "", data.getCZZ004() + "", data.getCZZ018() + "",
-                        data.getID() + ""});
+                new String[]{data.getCzz003() + "", data.getCzz004() + "", data.getCzz018() + "",
+                        data.getId() + ""});
         sqlite.close();
     }
 
@@ -97,10 +99,10 @@ public class AssetInfoDatabase {
                 + CreateDatabaseAndTables.assetTablesNames[1] + where, null);
         for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
             Asset asset = new Asset();
-            asset.setID(cursor.getInt(0));
-            asset.setCZZ003(cursor.getString(1));
-            asset.setCZZ004(cursor.getString(2));
-            asset.setCZZ018(cursor.getString(3));
+            asset.setId(cursor.getInt(0));
+            asset.setCzz003(cursor.getString(1));
+            asset.setCzz004(cursor.getString(2));
+            asset.setCzz018(cursor.getString(3));
             data.add(asset);
         }
         if (!cursor.isClosed()) {
@@ -135,7 +137,7 @@ public class AssetInfoDatabase {
      * @param data Asset
      */
     public void save(Asset data) {
-        List<Asset> datas = query(" where id=" + data.getID());
+        List<Asset> datas = query(" where id=" + data.getId());
         if (datas != null && !datas.isEmpty()) {
             update(data);
         } else {
