@@ -1,9 +1,9 @@
-package com.suncreate.asset.db.asset;
+package com.companyname.asset.db.asset;
 
 import android.app.Activity;
 import android.content.Context;
 
-import com.suncreate.asset.bean.scan.Asset;
+import com.companyname.asset.bean.scan.Asset;
 
 import java.util.List;
 

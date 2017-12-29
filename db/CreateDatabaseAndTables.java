@@ -1,4 +1,4 @@
-package com.suncreate.asset.db;
+package com.companyname.asset.db;
 
 import android.content.Context;
 import android.database.DatabaseErrorHandler;

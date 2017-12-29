@@ -1,9 +1,9 @@
-package com.suncreate.asset.db.user;
+package com.companyname.asset.db.user;
 
 import android.app.Activity;
 import android.content.Context;
 
-import com.suncreate.asset.bean.scan.User;
+import com.companyname.asset.bean.scan.User;
 
 import java.util.List;
 

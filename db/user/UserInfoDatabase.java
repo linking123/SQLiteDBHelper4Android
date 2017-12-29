@@ -1,11 +1,11 @@
-package com.suncreate.asset.db.user;
+package com.companyname.asset.db.user;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.suncreate.asset.bean.scan.User;
-import com.suncreate.asset.db.CreateDatabaseAndTables;
+import com.companyname.asset.bean.scan.User;
+import com.companyname.asset.db.CreateDatabaseAndTables;
 
 import java.util.ArrayList;
 import java.util.List;
